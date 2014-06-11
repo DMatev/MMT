@@ -4,8 +4,13 @@
   "dependencies": {
     "express": "~3.4.4",
     "ejs": "~0.8.5",
+    "static-favicon": "~1.0.0",
     "mongoose": "~3.8.1",
-    "sanitize-html": "~1.1.5"
+    "sanitize-html": "~1.1.5",
+    "passport" : "~0.1.17",     
+    "passport-local" : "~0.1.6",  
+    "connect-flash" : "~0.1.1",
+    "bcrypt-nodejs" : "latest"
   },
   "subdomain": "mmt-project",
   "scripts": {
