@@ -1,0 +1,18 @@
+{
+  "name": "mmt",
+  "main": "index.js",
+  "dependencies": {
+    "express": "~3.4.4",
+    "ejs": "~0.8.5",
+    "mongoose": "~3.8.1",
+    "sanitize-html": "~1.1.5"
+  },
+  "subdomain": "mmt-project",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "version": "0.0.0-3",
+  "engines": {
+    "node": "0.10.x"
+  }
+}
