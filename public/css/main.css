@@ -1,11 +1,12 @@
 #container-main {
 	position: absolute;
     width: 600px;
-    height: 500px;
     top: 50%;
     left: 50%;
     margin: -250px 0 0 -300px;
     background-color: #111111;
+    border:2px solid black;
+	border-radius: 10px;
 }
 #container-login {
 	text-align: center;
@@ -22,7 +23,7 @@
 #menu {
 	height:200px;
 	width: 140px;
-	margin-left: -120px;
+	margin-left: -140px;
 	padding-left: 10px;
 	float: left;
 	position:fixed;
