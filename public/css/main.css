@@ -23,7 +23,7 @@
 #menu {
 	height:200px;
 	width: 140px;
-	margin-left: -140px;
+	margin-left: -158px;
 	padding-left: 10px;
 	float: left;
 	position:fixed;
@@ -39,7 +39,6 @@
 	cursor : pointer;
 }
 #main-content {
-	height: 500px;
 	width: 450px;
 	float: left;
 	margin-left: 30px;
