@@ -1,24 +1,33 @@
-<!-- views/index.ejs -->
 <!doctype html>
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
 	<title>LOLBuddies</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-	<style>
-		body 		{ padding-top:80px; }
-	</style>
 </head>
 <body>
-	<div class="container">
-
-		<div class="jumbotron text-center">
-			<h1>Welcome to LOLBuddies</h1>
-			<p>Login or Register with:</p>
-
-			<a href="/login" class="btn btn-default"><span class="fa fa-user"></span>Login</a>
-			<a href="/signup" class="btn btn-default"><span class="fa fa-user"></span>Signup</a>
+	<div id="container-main">
+		<div id="container-login">
+			<h1>LOLBuddies</h1>
+			<form action="/login" method="post">
+				<% if (message.length > 0) { %>
+					<div class="container-eror"><%= message %></div>
+				<% } %>
+				<input type="text" placeholder="username" class="input-text" id="inputUsr" name="username"/></br>
+				<input type="password" placeholder="password" class="input-text" id="inputPass" name="password"/>
+				<p id="recoveryAcc">forgot password?</p>
+				<button type="submit" class="input-button" id="btnLogIn">Log In</button>
+			</form>
+			<button class="input-button" id="btnSignUp">Sign Up</button>
 		</div>
 	</div>
+<script src="/js/lib/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#btnSignUp').on('click', function(){
+			window.location = '/signup';
+		})
+
+	});
+</script>
 </body>
 </html>

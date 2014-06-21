@@ -1,0 +1,73 @@
+#container-main {
+	position: absolute;
+    width: 600px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    margin: -250px 0 0 -300px;
+}
+#container-login {
+	text-align: center;
+}
+#container-friendlist{
+	display: none;
+}
+#container-junglertimertool { 
+	display: none;
+}
+#container-matchhistory {
+	display: none;
+}
+#menu {
+	height:500px;
+	width: 120px;
+	margin-left: -120px;
+	float: left;
+}
+.menu-option {
+	color: blue;
+}
+.hover {
+	color: red;
+	cursor : pointer;
+}
+#main-content {
+	height: 500px;
+	width: 450px;
+	float: left;
+	margin-left: 30px;
+}
+.wait{
+	width: 32px;
+	height: 32px;
+	background-image: url('../images/ajax-loader.gif');
+}
+#wait-history{
+	margin-top: 70px;
+	margin-left: 209px;
+	display: none;
+}
+#wait-friends{
+	display: none;
+}
+
+.input-text {
+	width: 200px;
+	height: 25px;
+	margin-top: 10px;
+}
+.container-eror{
+	background-color: pink;
+	color: red;
+}
+#recoveryAcc {
+	text-align: right;
+	margin-right: 200px;
+}
+.info-hover {
+	background-color: black;
+	text-align: center;
+}
+.info-hover-text {
+	color: white;
+}

@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<title>LOLBuddies</title>
+</head>
+<body>
+	<div id="container-main">
+		<div id="menu">
+			<p class="menu-option" id="LogOut">Log Out</p>
+			<p class="menu-option" id="EditFriend">Edit Friend List</p>
+			<p class="menu-option" id="JunglerTimerTool">Jungler Timer Tool</p>
+			<p class="menu-option" id="History">Match History</p>
+		</div>
+		<div id="main-content"> 
+			<div id="container-junglertimertool">
+				<p> Jungler Timer Tool</p>
+				<audio id="audioNotification">
+				 <source src="/audio/notification.mp3" type="audio/mp3">
+				  Your browser does not support HTML5 audio.
+				</audio>
+				<div>
+					<p>Blue Golem</p>
+					<canvas width="400" height="100" id="BlueTeamBlueGolem">Your browser does not support the HTML5 canvas tag.</canvas>
+					<button id="btnJTTBlueGolem">Start/Reset</button>
+				</div>
+			</div>
+
+			<div id="container-friendlist">
+				<div id="container-freinds" >
+				</div>
+				<div id="container-addfriend">
+					<div class="container-eror" id="errorMessage">
+					</div>
+					<input type="text" placeholder="username" class="input-text" id="inputUsr" name="username"/>
+					<input type="text" placeholder="LOL Summoner name" class="input-text" id="inputLOLAcc" name="lolacc"/>
+					<select name="lolserver" id="inputLOLServer">
+					  <option value="euw">EUW</option>
+					  <option value="eune">EUNE</option>
+					</select>
+					<button class="input-button" id="btnAddFriend">Add</button>
+				</div>
+			</div>
+
+			<div id="container-matchhistory">
+				<div id="wait-history">
+					<div class="wait"></div>
+				</div>
+				<div id="container-history">
+				</div>
+			</div>
+		</div>
+	</div>
+<script src="/js/lib/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		var audioNotification = $('#audioNotification')[0];
+
+		function drawFriend(friend){
+			var form = '<div class="container-friend">' + 
+			'<p class="friend-info-acc">' + friend.lolacc + '</p>' + 
+			'<p class="friend-info-username">' + '('+ friend.username + ')' + '</p>' +
+			'<p class="friend-info-server">' + friend.lolserver + '</p>' +
+			'</div>';
+
+			return form;
+		}
+
+		function drawFriends(){
+			$('#container-freinds').empty();
+			$.get( "/api/friends", function(friends) {
+				if (friends.friendList.length === 0){
+					$("<p>you have not added friends</p>")
+					.appendTo('#container-freinds');
+				}
+				for(var i=0; i<friends.friendList.length; i++){
+					$(drawFriend(friends.friendList[i]))
+					.appendTo('#container-freinds');
+					$('<button class="friend-remove">remove</button>').on('click', { user_id : friends.friendList[i]._id }, function(event){
+						$.ajax({
+							url: '/api/friends/delete/' + encodeURIComponent(event.data.user_id),
+							type: 'POST',
+							data: '',
+							success: function(data){
+								if(data.error){
+									$('#errorMessage')[0].innerHTML = data.error;
+								} else {
+									drawFriends();
+								}
+							}
+						});
+					})
+					.appendTo('#container-freinds');
+				}
+			});
+			$('#container-friendlist').show();
+		}
+
+		$( ".menu-option" ).hover(
+		  function() {
+		    $( this ).addClass( "hover" );
+		  }, function() {
+		    $( this ).removeClass( "hover" );
+		  }
+		);
+
+		$('#LogOut').on('click', function(){
+			window.location = '/logout';
+		});
+
+		$('#EditFriend').on('click', function(){
+			$('#container-junglertimertool').hide();
+			$('#container-matchhistory').hide();
+			drawFriends();
+		});
+		$('#JunglerTimerTool').on('click', function(){
+			$('#container-friendlist').hide();
+			$('#container-matchhistory').hide();
+			$('#container-junglertimertool').show();
+		});
+		$('#History').on('click', function(){
+			$('#container-junglertimertool').hide();
+			$('#container-friendlist').hide();
+			$('#container-matchhistory').show();
+			$('#wait-history').show();
+			$.get( "/api/history", function(data) {
+				$('#wait-history').hide();
+				console.log(data);
+				for(var i=0; i<data.history.games.length; i++){
+					var color;
+					if (data.history.games[i].isWon){
+						color = '#709C34';
+					} else {
+						color = '#AA3939';
+					}
+					$("<div class='game' style='background-color: "+ color +"'><div id='playerChampionImage"+ i +"'></div><div class='playerSummoners'> " +
+						"<div id='playerSummoners"+ i +"spell1'></div><div id='playerSummoners"+ i +"spell2'></div></div><div id='playerStats"+ i +"'></div></div>").appendTo('#container-history');
+					// PLAYER CHAMPION IMAGE
+					$('#playerChampionImage'+i).css({
+						width: "120px",
+						height: "120px",
+						"background-image":  'url(' + data.history.games[i].player.champion.img.full + ')'
+					}).
+					on('mouseenter', {name: data.history.games[i].player.champion.name}, function(event){
+						$(this).empty();
+						$('<div class="info-hover"><p class="info-hover-text">' + event.data.name + '</p></div>').appendTo(this);
+					})
+					.on('mouseleave', {name: data.history.games[i].player.champion.name}, function(event){
+						$(this).empty();
+					});
+					// PLAYER STATS KDA
+					$("<p class='stats'> kills: " + data.history.games[i].player.KDA.kills + " deaths: " + data.history.games[i].player.KDA.deaths + " assists: " + data.history.games[i].player.KDA.assists + "</p>")
+					.appendTo('#playerStats' + i);
+					// SUMMONER SPELL 1
+					$('#playerSummoners'+i+'spell1').css({
+						width: data.history.games[i].player.summoners.spell1.img.sprite.width,
+						height: data.history.games[i].player.summoners.spell1.img.sprite.height,
+						background: data.history.games[i].player.summoners.spell1.img.sprite.background
+					})
+					.on('mouseenter', {name: data.history.games[i].player.summoners.spell1.name}, function(event){
+						$(this).empty();
+						$('<div class="info-hover"><p class="info-hover-text">' + event.data.name + '</p></div>').appendTo(this);
+					})
+					.on('mouseleave', {name: data.history.games[i].player.summoners.spell1.name}, function(event){
+						$(this).empty();
+					});
+					// SUMMONER SPELL 2
+					$('#playerSummoners'+i+'spell2').css({
+						width: data.history.games[i].player.summoners.spell2.img.sprite.width,
+						height: data.history.games[i].player.summoners.spell2.img.sprite.height,
+						background: data.history.games[i].player.summoners.spell2.img.sprite.background
+					})
+					.on('mouseenter', {name: data.history.games[i].player.summoners.spell2.name}, function(event){
+						$(this).empty();
+						$('<div class="info-hover"><p class="info-hover-text">' + event.data.name + '</p></div>').appendTo(this);
+					})
+					.on('mouseleave', {name: data.history.games[i].player.summoners.spell2.name}, function(event){
+						$(this).empty();
+					});
+
+				}
+			});
+		});
+		$('#btnAddFriend').on('click', function(){
+			$('#container-freinds').hide();
+			$('#container-addfriend').hide();
+			$.ajax({
+				url: '/api/friends/add',
+				type: 'POST',
+				data: "username="+encodeURIComponent($('#inputUsr')[0].value) +
+								"&lolacc="+encodeURIComponent($('#inputLOLAcc')[0].value)+
+								"&lolserver="+encodeURIComponent($('#inputLOLServer')[0].value),
+				success: function(data) {
+					if(data.error){
+						$('#errorMessage')[0].innerHTML = data.error;
+					} else {
+						$('#inputUsr')[0].value = '';
+						$('#inputLOLAcc')[0].value = '';
+
+						$('#container-freinds').show();
+						$('#container-addfriend').show();
+						drawFriends();
+					}
+				}	
+			});
+		});
+
+		$('#btnJTTBlueGolem').on('click', function(){
+			BlueGomlemAnimation();
+			audioNotification.play();
+		});
+
+		function BlueGomlemAnimation(){
+			var BlueTimeInterval = setInterval(function(){
+				myTimer()}, 1000);
+			var canvas = $('#BlueTeamBlueGolem')[0];
+			var ctx = canvas.getContext('2d');
+		}
+		function makeGameText(game){
+			var color;
+			if(game.isWon){
+				color = 'green';
+			} else {
+				color = 'red';
+			}
+			var text = "<div class='game' style='background-color: " + color + " ' >" +
+			"<div id='player0'></div></div>";
+			return text;
+
+		}
+	});
+</script>
+</body>
+</html>

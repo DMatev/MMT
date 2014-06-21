@@ -18,8 +18,17 @@ function validateTruthValue(elementValue){
 	return truthValuePattern.test(elementValue);   
 }
 
+function validateLOLServer(elementValue){
+	if (elementValue === 'euw' || elementValue === 'eune'){
+		return true;
+	} else {
+		return false; 
+	}  
+		   
+}
 
 exports.username = validateUsername;
 exports.email = validateEmail;
 exports.password = validatePassword;
+exports.LOLServer = validateLOLServer;
 exports.truthValue = validateTruthValue;

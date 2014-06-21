@@ -1,5 +1,3 @@
-//index.js
-
 var express  = require('express');
 var app      = express();
 var port     = process.env.PORT || 3000;
@@ -21,20 +19,21 @@ app.configure(function() {
 	app.use(favicon("public/images/favicon.ico")); 
 	app.use(express.static(__dirname +  '/public'));
 
-	app.set('view engine', 'ejs'); // set up ejs for templating
+	app.set('view engine', 'ejs');
 
-	// required for passport
+
 	app.use(express.session({  
 	    secret: "lolbuddiesisthebestgameever",  
 	  })); 
 	app.use(passport.initialize());
-	app.use(passport.session()); // persistent login sessions
-	app.use(flash()); // use connect-flash for flash messages stored in session
+	app.use(passport.session());
+	app.use(flash()); 
 
 });
 
-require('./app/routes.js')(app, passport); // load routes and pass in to app and passport
+require('./app/routes.js')(app, passport);
 
 
 app.listen(port);
 console.log('The magic happens on port ' + port);
+

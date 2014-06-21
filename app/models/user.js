@@ -7,7 +7,17 @@ var userSchema = mongoose.Schema({
     password : String,
     email : String,
     role : String,
-
+    lolid: String,
+    lolacc: String,
+    lolusername: String,
+    lolserver: String,
+    friendList: [ { 
+        username: String,
+        lolid: String, 
+        lolacc: String, 
+        lolusername: String,
+        lolserver: String,
+    } ]
 });
 
 userSchema.methods.generateHash = function(password) {

@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<title>LOLBuddies</title>
+</head>
+<body>
+	<div id="container-main">
+		<div id="container-signunp">
+			<h1>LOLBuddies</h1>
+			<form action="/signup" method="post">
+				<% if (message.length > 0) { %>
+					<div class="container-eror"><%= message %></div>
+				<% } %>
+				<input type="text" placeholder="username" class="input-text" id="inputUsr" name="username"/></br>
+				<input type="password" placeholder="password" class="input-text" id="inputPass" name="password"/></br>
+				<input type="text" placeholder="email" class="input-text" id="inputEmail" name="email"/></br>
+				<input type="text" placeholder="LOL Summoner name" class="input-text" id="inputLOLAcc" name="lolacc"/>
+				<select name="lolserver">
+				  <option value="euw">EUW</option>
+				  <option value="eune">EUNE</option>
+				</select>
+				<br/>
+				<button type="submit" class="input-button">Sign Up</button>
+			</form>
+		</div>
+	</div>
+<script src="/js/lib/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+
+	});
+</script>
+</body>
+</html>
