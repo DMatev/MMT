@@ -69,6 +69,7 @@
 	text-align: center;
 }
 .info-hover-text {
+	z-index: 5;
 	color: white;
 }
 .items {
@@ -78,18 +79,31 @@
 .spell {
 	float: left;
 }
-.game {
+.game-won {
+	border: 1px solid black;
 	height: 350px;
-	width: 400px;
+	width: 450px;
+	background-color: #6AA642;
+}
+.game-lost {
+	border: 1px solid black;
+	height: 350px;
+	width: 450px;
+	background-color: #E02D2D;
 }
 .playerItems {
-	margin-top: 50px;
-	width: 400px;
+	position: relative;
 }
 .stats{
 	float: left;
-	margin-top: 50px;
+	color: white;
 }
-#playerSummoners {
-	float: left;
+.summoners-text {
+	height: 0px;
+	color: white;
+}
+.items-text {
+	margin-top: 65px;
+	height: 0px;
+	color: white;
 }

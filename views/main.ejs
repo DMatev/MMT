@@ -46,6 +46,7 @@
 				<div id="wait-history">
 					<div class="wait"></div>
 				</div>
+
 				<div id="container-history">
 				</div>
 			</div>
@@ -121,24 +122,55 @@
 		$('#History').on('click', function(){
 			$('#container-junglertimertool').hide();
 			$('#container-friendlist').hide();
+			$('#container-history').empty();
 			$('#container-matchhistory').show();
 			$('#wait-history').show();
 			$.get( "/api/history", function(data) {
 				$('#wait-history').hide();
 				console.log(data);
 				for(var i=0; i<data.history.games.length; i++){
-					var color;
+					var isWon;
 					if (data.history.games[i].isWon){
-						color = '#709C34';
+						isWon = 'game-won';
 					} else {
-						color = '#AA3939';
+						isWon = 'game-lost';
 					}
-					$("<div class='game' style='background-color: "+ color +"'><div id='playerChampionImage"+ i +"'></div><div id='playerSummoners'> " +
-						"<div id='playerSummoners"+ i +"spell1'></div><div id='playerSummoners"+ i +"spell2'></div></div><div class='playerItems' id='playerItems"+i+"'></div><div id='playerStats"+ i +"'></div></div>").appendTo('#container-history');
+					$('<div class="' + isWon + '">' +
+						'<div id="playerChampionImage'+ i +'">' +	
+						'</div>' + '<p class="summoners-text">Summoners: </p>' +
+						'<div id="playerSummonersSpells' + i + '"> ' +
+							'<div id="playerSummoners' + i + 'spell1"></div>' +
+							'<div id="playerSummoners' + i + 'spell2"></div>' + 
+						'</div>' + '<p class="items-text">Items: </p>' +
+						'<div id="playerItems'+ i + '"></div>' +
+						'<div id="playerStats' + i +'"></div>' +
+					'</div>')
+					.appendTo('#container-history');
+
+					$('#playerSummoners' + i + 'spell1').css({
+						'position': 'relative',
+						'float': 'left'
+					});
+					$('#playerSummoners' + i + 'spell2').css({
+						'position': 'relative',
+						'float': 'left'
+					});
+					$('#playerItems' + i).css({
+						'float': 'left',
+						'margin-top': -50 +'px',
+						'height': 48 + 'px',
+						'width': 450 + 'px'
+					});
+					$('#playerStats' + i).css({
+						'float': 'left',
+						'margin-top': 50 +'px',
+						'height': 48 + 'px',
+						'width': 450 + 'px'
+					});
 					// PLAYER CHAMPION IMAGE
 					$('#playerChampionImage'+i).css({
-						width: "120px",
-						height: "120px",
+						width: 120 + 'px',
+						height: 120 + 'px',
 						"background-image":  'url(' + data.history.games[i].player.champion.img.full + ')'
 					}).
 					on('mouseenter', {name: data.history.games[i].player.champion.name}, function(event){
@@ -232,18 +264,6 @@
 				myTimer()}, 1000);
 			var canvas = $('#BlueTeamBlueGolem')[0];
 			var ctx = canvas.getContext('2d');
-		}
-		function makeGameText(game){
-			var color;
-			if(game.isWon){
-				color = 'green';
-			} else {
-				color = 'red';
-			}
-			var text = "<div class='game' style='background-color: " + color + " ' >" +
-			"<div id='player0'></div></div>";
-			return text;
-
 		}
 	});
 </script>
