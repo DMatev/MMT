@@ -240,6 +240,9 @@
 								"&lolacc="+encodeURIComponent($('#inputLOLAcc')[0].value)+
 								"&lolserver="+encodeURIComponent($('#inputLOLServer')[0].value),
 				success: function(data) {
+					if(data.validation){
+						$('#errorMessage')[0].innerHTML = data.validation;
+					}
 					if(data.error){
 						$('#errorMessage')[0].innerHTML = data.error;
 					} else {

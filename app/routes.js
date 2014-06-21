@@ -71,7 +71,7 @@ module.exports = function(app, passport) {
 					if(err){
 						res.json({ error: err });
 					} else {
-						res.json({ message: 'freind added' });
+						res.json({ message: 'friend added' });
 					}					
 				});
             }
