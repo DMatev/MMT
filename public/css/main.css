@@ -23,6 +23,9 @@
 	width: 120px;
 	margin-left: -120px;
 	float: left;
+	color:#222222;
+	border:5px solid black;
+	border-radius: 10px;
 }
 .menu-option {
 	color: blue;
