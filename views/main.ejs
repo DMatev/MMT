@@ -133,8 +133,8 @@
 					} else {
 						color = '#AA3939';
 					}
-					$("<div class='game' style='background-color: "+ color +"'><div id='playerChampionImage"+ i +"'></div><div class='playerSummoners'> " +
-						"<div id='playerSummoners"+ i +"spell1'></div><div id='playerSummoners"+ i +"spell2'></div></div><div id='playerStats"+ i +"'></div></div>").appendTo('#container-history');
+					$("<div class='game' style='background-color: "+ color +"'><div id='playerChampionImage"+ i +"'></div><div id='playerSummoners'> " +
+						"<div id='playerSummoners"+ i +"spell1'></div><div id='playerSummoners"+ i +"spell2'></div></div><div class='playerItems' id='playerItems"+i+"'></div><div id='playerStats"+ i +"'></div></div>").appendTo('#container-history');
 					// PLAYER CHAMPION IMAGE
 					$('#playerChampionImage'+i).css({
 						width: "120px",
@@ -177,7 +177,24 @@
 					.on('mouseleave', {name: data.history.games[i].player.summoners.spell2.name}, function(event){
 						$(this).empty();
 					});
-
+					// ITEMS
+					for(var j=0; j<data.history.games[i].player.items.length; j++){
+						$('<div class="items" id="game' + i + 'item' + j + '"></div>')
+						.css({
+							width: data.history.games[i].player.items[j].img.sprite.width,
+							height: data.history.games[i].player.items[j].img.sprite.height,
+							background: data.history.games[i].player.items[j].img.sprite.background
+						})
+						.on('mouseenter', {name: data.history.games[i].player.items[j].name}, function(event){
+							$(this).empty();
+							$('<div class="info-hover"><p class="info-hover-text">' + event.data.name + '</p></div>').appendTo(this);
+						})
+						.on('mouseleave', {name: data.history.games[i].player.items[j].name}, function(event){
+							$(this).empty();
+						})
+						.appendTo('#playerItems' + i);
+					}
+					
 				}
 			});
 		});

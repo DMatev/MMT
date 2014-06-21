@@ -71,3 +71,25 @@
 .info-hover-text {
 	color: white;
 }
+.items {
+	margin-top: 50px;
+	float: left;
+}
+.spell {
+	float: left;
+}
+.game {
+	height: 350px;
+	width: 400px;
+}
+.playerItems {
+	margin-top: 50px;
+	width: 400px;
+}
+.stats{
+	float: left;
+	margin-top: 50px;
+}
+#playerSummoners {
+	float: left;
+}

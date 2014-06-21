@@ -107,34 +107,7 @@ module.exports = function(app, passport) {
 				        		var champion = searchKeyById(allChampions, data.games[i].championId);
 				        		var summoner1 = searchKeyById(allSummoners, data.games[i].spell1);
 				        		var summoner2 = searchKeyById(allSummoners, data.games[i].spell2);
-								var item0 = {name: null, image: { full: null, sprite: null, x: null, y: null, w: null, h: null } };
-				        		if (data.games[i].stats.item0){
-				        			item0 = searchKeyById(allItems, data.games[i].stats.item0);
-				        		}
-				        		var item1 = {name: null, image: { full: null, sprite: null, x: null, y: null, w: null, h: null } };
-				        		if (data.games[i].stats.item1){
-				        			item0 = searchKeyById(allItems, data.games[i].stats.item1);
-				        		}
-				        		var item2 = {name: null, image: { full: null, sprite: null, x: null, y: null, w: null, h: null } };
-				        		if (data.games[i].stats.item2){
-				        			item2 = searchKeyById(allItems, data.games[i].stats.item2);
-				        		}
-				      			var item3 = {name: null, image: { full: null, sprite: null, x: null, y: null, w: null, h: null } };
-				        		if (data.games[i].stats.item3){
-				        			item0 = searchKeyById(allItems, data.games[i].stats.item3);
-				        		}
-				        		var item4 = {name: null, image: { full: null, sprite: null, x: null, y: null, w: null, h: null } };
-				        		if (data.games[i].stats.item4){
-				        			item4 = searchKeyById(allItems, data.games[i].stats.item4);
-				        		}
-				        		var item5 = {name: null, image: { full: null, sprite: null, x: null, y: null, w: null, h: null } };
-				        		if (data.games[i].stats.item5){
-				        			item5 = searchKeyById(allItems, data.games[i].stats.item5);
-				        		}
-				        		var item6 = {name: null, image: { full: null, sprite: null, x: null, y: null, w: null, h: null } };
-				        		if (data.games[i].stats.item6){
-				        			item5 = searchKeyById(allItems, data.games[i].stats.item6);
-				        		}
+	
 				        		history.games.push({
 			        				"isWon": data.games[i].stats.win,
 							        "player": {
@@ -179,89 +152,108 @@ module.exports = function(app, passport) {
 											"deaths" : data.games[i].stats.numDeaths,
 											"assists" : data.games[i].stats.assists
 										},
-										"items": {
-											"item0" : {
-												"name": item0.name,
-												"img" : { 
-													"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item0.image.full,
-													"sprite" : {
-														"height" : item0.image.h + "px",
-														"width" : item0.image.w + "px",
-														"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item0.image.sprite + "') -" + item0.image.x + "px -" + item0.image.y + "px no-repeat"
-													}
-												}	
-											},
-											"item1" : {
-												"name": item1.name,
-												"img" : { 
-													"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item1.image.full,
-													"sprite" : {
-														"height" : item1.image.h + "px",
-														"width" : item1.image.w + "px",
-														"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item1.image.sprite + "') -" + item1.image.x + "px -" + item1.image.y + "px no-repeat"
-													}
-												}	
-											},
-											"item2" : {
-												"name": item2.name,
-												"img" : { 
-													"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item2.image.full,
-													"sprite" : {
-														"height" : item2.image.h + "px",
-														"width" : item2.image.w + "px",
-														"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item2.image.sprite + "') -" + item2.image.x + "px -" + item2.image.y + "px no-repeat"
-													}
-												}	
-											},
-											"item3" : {
-												"name": item3.name,
-												"img" : { 
-													"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item3.image.full,
-													"sprite" : {
-														"height" : item3.image.h + "px",
-														"width" : item3.image.w + "px",
-														"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item3.image.sprite + "') -" + item3.image.x + "px -" + item3.image.y + "px no-repeat"
-													}
-												}	
-											},
-											"item4" : {
-												"name": item4.name,
-												"img" : { 
-													"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item4.image.full,
-													"sprite" : {
-														"height" : item4.image.h + "px",
-														"width" : item4.image.w + "px",
-														"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item4.image.sprite + "') -" + item4.image.x + "px -" + item4.image.y + "px no-repeat"
-													}
-												}	
-											},
-											"item5" : {
-												"name": item5.name,
-												"img" : { 
-													"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item5.image.full,
-													"sprite" : {
-														"height" : item5.image.h + "px",
-														"width" : item5.image.w + "px",
-														"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item5.image.sprite + "') -" + item5.image.x + "px -" + item5.image.y + "px no-repeat"
-													}
-
-												}	
-											},
-											"item6" : {
-												"name": item6.name,
-												"img" : { 
-													"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item6.image.full,
-													"sprite" : {
-														"height" : item6.image.h + "px",
-														"width" : item6.image.w + "px",
-														"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item6.image.sprite + "') -" + item6.image.x + "px -" + item6.image.y + "px no-repeat"
-													}
-												}	
-											}
-										}
+										"items": []
 									},
 									"teams": []
 								});
+		        				if (data.games[i].stats.item0){
+				        			item0 = searchKeyById(allItems, data.games[i].stats.item0);
+				        			history.games[i].player.items.push({
+										"name": item0.name,
+										"img" : { 
+											"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item0.image.full,
+											"sprite" : {
+												"height" : item0.image.h + "px",
+												"width" : item0.image.w + "px",
+												"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item0.image.sprite + "') -" + item0.image.x + "px -" + item0.image.y + "px no-repeat"
+											}
+										}	
+				        			});
+				        		}
+				        		if (data.games[i].stats.item1){
+				        			item1 = searchKeyById(allItems, data.games[i].stats.item1);
+				        			history.games[i].player.items.push({
+										"name": item1.name,
+										"img" : { 
+											"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item1.image.full,
+											"sprite" : {
+												"height" : item1.image.h + "px",
+												"width" : item1.image.w + "px",
+												"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item1.image.sprite + "') -" + item1.image.x + "px -" + item1.image.y + "px no-repeat"
+											}
+										}	
+				        			});
+				        		}
+				        		if (data.games[i].stats.item2){
+				        			item2 = searchKeyById(allItems, data.games[i].stats.item2);
+				        			history.games[i].player.items.push({
+										"name": item2.name,
+										"img" : { 
+											"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item2.image.full,
+											"sprite" : {
+												"height" : item2.image.h + "px",
+												"width" : item2.image.w + "px",
+												"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item2.image.sprite + "') -" + item2.image.x + "px -" + item2.image.y + "px no-repeat"
+											}
+										}	
+				        			});
+				        		}
+				        		if (data.games[i].stats.item3){
+				        			item3 = searchKeyById(allItems, data.games[i].stats.item3);
+				        			history.games[i].player.items.push({
+										"name": item3.name,
+										"img" : { 
+											"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item3.image.full,
+											"sprite" : {
+												"height" : item3.image.h + "px",
+												"width" : item3.image.w + "px",
+												"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item3.image.sprite + "') -" + item3.image.x + "px -" + item3.image.y + "px no-repeat"
+											}
+										}	
+				        			});
+				        		}
+				        		if (data.games[i].stats.item4){
+				        			item4 = searchKeyById(allItems, data.games[i].stats.item4);
+				        			history.games[i].player.items.push({
+										"name": item4.name,
+										"img" : { 
+											"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item4.image.full,
+											"sprite" : {
+												"height" : item4.image.h + "px",
+												"width" : item4.image.w + "px",
+												"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item4.image.sprite + "') -" + item4.image.x + "px -" + item4.image.y + "px no-repeat"
+											}
+										}	
+				        			});
+				        		}
+				        		if (data.games[i].stats.item5){
+				        			item5 = searchKeyById(allItems, data.games[i].stats.item5);
+				        			history.games[i].player.items.push({
+										"name": item5.name,
+										"img" : { 
+											"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item5.image.full,
+											"sprite" : {
+												"height" : item5.image.h + "px",
+												"width" : item5.image.w + "px",
+												"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item5.image.sprite + "') -" + item5.image.x + "px -" + item5.image.y + "px no-repeat"
+											}
+										}	
+				        			});
+				        		}
+				        		if (data.games[i].stats.item6){
+				        			item6 = searchKeyById(allItems, data.games[i].stats.item6);
+				        			history.games[i].player.items.push({
+										"name": item6.name,
+										"img" : { 
+											"full" : "http://ddragon.leagueoflegends.com/cdn/4.9.1/img/item/" + item6.image.full,
+											"sprite" : {
+												"height" : item6.image.h + "px",
+												"width" : item6.image.w + "px",
+												"background" : "url('//ddragon.leagueoflegends.com/cdn/4.9.1/img/sprite/" + item6.image.sprite + "') -" + item6.image.x + "px -" + item6.image.y + "px no-repeat"
+											}
+										}	
+				        			});
+				        		}
 								for(var j=0; j< data.games[i].fellowPlayers.length; j++){
 									var champ = searchKeyById(allChampions, data.games[i].fellowPlayers[j].championId);
 									history.games[i].teams.push({
