@@ -24,7 +24,7 @@
 				</audio>
 				<div>
 					<p>Blue Golem</p>
-					<canvas width="400" height="100" id="BlueTeamBlueGolem">Your browser does not support the HTML5 canvas tag.</canvas>
+					<canvas width="85" height="55" id="BlueTeamBlueGolem" style="background-color: white">Your browser does not support the HTML5 canvas tag.</canvas>
 					<button id="btnJTTBlueGolem">Start/Reset</button>
 				</div>
 			</div>
@@ -178,16 +178,50 @@
 		});
 
 		$('#btnJTTBlueGolem').on('click', function(){
-			BlueGomlemAnimation();
-			audioNotification.play();
+			JunglerTool.stop();
+			JunglerTool.start();
+
 		});
 
-		function BlueGomlemAnimation(){
-			var BlueTimeInterval = setInterval(function(){
-				myTimer()}, 1000);
-			var canvas = $('#BlueTeamBlueGolem')[0];
-			var ctx = canvas.getContext('2d');
-		}
+		var JunglerTool = {
+			timeOutInterval: null,
+			mainLoopInterval: null,
+			timeLeft: null,
+			canvas: $('#BlueTeamBlueGolem')[0],
+			ctx: $('#BlueTeamBlueGolem')[0].getContext('2d'),
+			stop: function(){
+				clearInterval(this.timeOutInterval);
+				clearInterval(this.mainLoopInterval);
+				audioNotification.pause();
+				this.timeLeft = 0;
+			},
+			start: function(){
+				this.timeLeft = 360000;
+				this.timeOutInterval = setTimeout(function(){
+					audioNotification.currentTime = 0;
+					audioNotification.play();
+				}, 2000);
+				this.animate();
+			},
+			animate: function(){
+				var that = this;
+				this.mainLoopInterval = setInterval(function(){
+					that.ctx.clearRect(0,0,that.canvas.width,that.canvas.height);
+					that.ctx.font="20px Georgia";
+					var seconds = parseInt((that.timeLeft / 1000) % 60) ;
+					var minutes = parseInt((that.timeLeft / (1000*60)) % 60);
+					var time;
+					if (minutes > 0){
+						time = minutes + ':' + seconds;
+					} else {
+						time = seconds;
+					}
+					
+					that.ctx.fillText(time,10,30);
+					that.timeLeft -= 1000;
+				}, 1000);
+			}
+		};
 
 		function matchHistory(lolserver, lolid){
 			$('#container-junglertimertool').hide();
@@ -198,7 +232,6 @@
 
 			$.get( "/api/history/"+ encodeURIComponent(lolserver) + '/' + encodeURIComponent(lolid), function(data) {
 				$('#wait-history').hide();
-				console.log(data);
 				for(var i=0; i<data.history.games.length; i++){
 					var isWon;
 					if (data.history.games[i].isWon){
@@ -213,9 +246,9 @@
 						'</div>' +
 						'<div class="teamsDiv">' +
 							'<p class="teams-text">Purple team: </p>' + 
-							'<div id="purpleTeam' + i + '"></div>' + '</br>' + '</br>' +
+							'<div class="purple" id="purpleTeam' + i + '"></div>' +
 							'<p class="teams-text">Blue team: </p>' +
-							'<div id="blueTeam' + i + '"></div>' +
+							'<div class="blue" id="blueTeam' + i + '"></div>' +
 						'</div>' +
 						'<div class="summonersDiv">' +
 							'<p class="summoners-text">Summoners: </p>' +
