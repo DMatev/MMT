@@ -101,12 +101,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 	float: left;
 }
 .game-won {
+	margin-top: 10px;
+	padding: 10px;
 	border: 1px solid black;
 	height: 350px;
 	width: 450px;
 	background-color: #6AA642;
 }
 .game-lost {
+	margin-top: 10px;
+	padding: 10px;
 	border: 1px solid black;
 	height: 350px;
 	width: 450px;
