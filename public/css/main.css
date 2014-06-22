@@ -1,3 +1,6 @@
+body{
+	background-color: #2c2c2c;
+}
 p {
 	color: white;
 }
@@ -136,7 +139,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 	margin-top: 10px;
 	padding: 10px;
 	border: 1px solid black;
-	height: 450px;
+	height: 400px;
 	width: 500px;
 	border-radius: 10px;
 	border:2px solid #c2c2c2;
