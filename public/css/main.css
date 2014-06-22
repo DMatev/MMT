@@ -126,11 +126,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 .game-won {
 	margin-top: 10px;
 	padding: 10px;
-	border: 1px solid black;
-	height: 450px;
+	height: 400px;
 	width: 500px;
-	/*background-color: #6AA642;*/
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(8%,#000000), color-stop(13%,#73880a), color-stop(37%,#6aa642), color-stop(60%,#6aa642), color-stop(86%,#73880a), color-stop(92%,#000000), color-stop(100%,#000000));
+	border-radius: 10px;
+	border:2px solid #c2c2c2;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(8%,#000000), color-stop(13%,#73880a), color-stop(37%,#6aa642), color-stop(60%,#6aa642), color-stop(92%,#73880a), color-stop(100%,#000000));
 }
 .game-lost {
 	margin-top: 10px;
@@ -138,7 +138,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 	border: 1px solid black;
 	height: 450px;
 	width: 500px;
-	background-color: #E02D2D;
+	border-radius: 10px;
+	border:2px solid #c2c2c2;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(8%,#000000), color-stop(13%,#3f0000), color-stop(37%,#b20000), color-stop(60%,#b20000), color-stop(92%,#3f0000), color-stop(93%,#3f0000), color-stop(100%,#000000), color-stop(100%,#000000));
 }
 .playerItems {
 	position: relative;
@@ -161,29 +163,45 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 	float: left;
 }
 .teamsDiv{
-	float: left;
-	margin-top: 20px;
+	position:absolute;
+	margin-top: 200px;
 	margin-left: 20px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+	border-radius: 20px;
+	border:2px solid black;
+	box-shadow:         inset 0 0 10px #000000;
+	background: #a622ad; /* Old browsers */
+background: -moz-linear-gradient(top,  #a622ad 0%, #a622ad 43%, #000000 48%, #000000 54%, #7db9e8 61%, #7db9e8 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a622ad), color-stop(43%,#a622ad), color-stop(48%,#000000), color-stop(54%,#000000), color-stop(61%,#7db9e8), color-stop(100%,#7db9e8)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #a622ad 0%,#a622ad 43%,#000000 48%,#000000 54%,#7db9e8 61%,#7db9e8 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #a622ad 0%,#a622ad 43%,#000000 48%,#000000 54%,#7db9e8 61%,#7db9e8 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #a622ad 0%,#a622ad 43%,#000000 48%,#000000 54%,#7db9e8 61%,#7db9e8 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #a622ad 0%,#a622ad 43%,#000000 48%,#000000 54%,#7db9e8 61%,#7db9e8 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a622ad', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+
 }
-#purpleTeam{
+.purple{
 	background-color: purple;
 }
-#blueTeam{
-	margin-top: 20px;
-	background-color: blue;
+.blue{
+	width: 100%;
+	padding-top: 20px;	
+	margin-top: 60px;
 }
 .summonersDiv {
-	float: left;
-	margin-top: -80px;
-	margin-left: -120px;
+	position:absolute;
+	margin-top: 30px;
+	margin-left: 130px;
 }
 .itemsDiv {
-	float : left;
-	margin-top: -30px;
-	margin-left : 20px;
+	position:absolute;
+	margin-top: 40px;
+	margin-left : 130px;
 }
 .statsDiv {
-	float: left;
-	margin-top: -180px;
+	position: absolute;
+	margin-top: -75px;
 	margin-left: 150px;
 }

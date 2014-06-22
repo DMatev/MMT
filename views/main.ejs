@@ -253,10 +253,14 @@
 							'<div id="playerStats' + i +'"></div>' +
 						'</div>' +
 						'<div class="teamsDiv">' +
-							'<p class="teams-text">Purple team: </p>' + 
-							'<div class="purple" id="purpleTeam' + i + '"></div>' +
-							'<p class="teams-text">Blue team: </p>' +
-							'<div class="blue" id="blueTeam' + i + '"></div>' +
+							'<div class="purple">'+
+								'<p class="teams-text">Purple team: </p>' + 
+								'<div id="purpleTeam' + i + '"></div>' +
+							'</div>'+
+							'<div class="blue">'+
+								'<p class="teams-text">Blue team: </p>' +
+								'<div id="blueTeam' + i + '"></div>' +
+							'</div>'+
 						'</div>' +
 						'<div class="summonersDiv">' +
 							'<p class="summoners-text">Summoners: </p>' +
@@ -272,6 +276,8 @@
 					'</div>')
 					.appendTo('#container-history');
 
+					//SOME CSS FOR THE ABOVE
+					
 					$('#playerSummoners' + i + 'spell1').css({
 						'position': 'relative',
 						'float': 'left'
@@ -294,6 +300,8 @@
 					});
 					// PLAYER CHAMPION IMAGE
 					$('#playerChampionImage'+i).css({
+						'position': 'absolute',
+						'margin-top': 50 +'px',
 						width: 120 + 'px',
 						height: 120 + 'px',
 						"background-image":  'url(' + data.history.games[i].player.champion.img.full + ')'
