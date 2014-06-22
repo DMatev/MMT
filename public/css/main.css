@@ -106,7 +106,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 .info-hover {
 	position:absolute;
 	width: inherit;
-	
 	background-color: rgba(0,0,0,0.7);
 	text-align: center;
 	font-size: 15px;
@@ -165,6 +164,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 	float: left;
 	margin-top: 20px;
 	margin-left: 20px;
+}
+#purpleTeam{
+	background-color: purple;
+}
+#blueTeam{
+	margin-top: 20px;
+	background-color: blue;
 }
 .summonersDiv {
 	float: left;
