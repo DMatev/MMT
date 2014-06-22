@@ -12,7 +12,10 @@
 			<p class="menu-option" id="JunglerTimerTool">Jungler Timer Tool</p>
 			<p class="menu-option" id="History">Match History</p>
 		</div>
+		<div id="friends">
+		</div>
 		<div id="main-content"> 
+
 			<div id="container-junglertimertool">
 				<p> Jungler Timer Tool</p>
 				<audio id="audioNotification">
@@ -27,11 +30,12 @@
 			</div>
 
 			<div id="container-friendlist">
+				<div class="container-erorr" id="errorMessage">
+				</div>
 				<div id="container-freinds" >
 				</div>
 				<div id="container-addfriend">
-					<div class="container-eror" id="errorMessage">
-					</div>
+					<p style="font-size: 20px">Add Friend</p>
 					<input type="text" placeholder="username" class="input-text" id="inputUsr" name="username"/>
 					<input type="text" placeholder="LOL Summoner name" class="input-text" id="inputLOLAcc" name="lolacc"/>
 					<select name="lolserver" id="inputLOLServer">
@@ -55,19 +59,39 @@
 <script src="/js/lib/jquery-1.11.0.min.js"></script>
 <script type="text/javascript">
 	$(function() {
+		var lolid =<%-JSON.stringify(lolid)%>, lolserver =<%-JSON.stringify(lolserver)%>;
 		var audioNotification = $('#audioNotification')[0];
 
-		function drawFriend(friend){
-			var form = '<div class="container-friend">' + 
-			'<p class="friend-info-acc">' + friend.lolacc + '</p>' + 
-			'<p class="friend-info-username">' + '('+ friend.username + ')' + '</p>' +
-			'<p class="friend-info-server">' + friend.lolserver + '</p>' +
-			'</div>';
+		drawFriendList();
 
-			return form;
+		function drawFriendList(){
+			$('#friends').empty();
+			$('<p style="font-size: 20px">Friends: </p>').appendTo('#friends');
+
+			$.get( "/api/friends", function(friends) {
+				if (friends.friendList.length === 0){
+					$("<p>you have no friends</p>")
+					.appendTo('#friends');
+				}
+				for(var i=0; i<friends.friendList.length; i++){
+					$('<p>' + friends.friendList[i].lolacc +'</p>')
+					.on('click', { server: friends.friendList[i].lolserver, id: friends.friendList[i].lolid },function(event){
+						matchHistory(event.data.server, event.data.id);
+					})
+					.hover(
+					  function() {
+					    $( this ).addClass( "hover" );
+					  }, function() {
+					    $( this ).removeClass( "hover" );
+					  }
+					)
+					.appendTo('#friends');
+				}
+			});
 		}
 
 		function drawFriends(){
+			drawFriendList();
 			$('#container-freinds').empty();
 			$.get( "/api/friends", function(friends) {
 				if (friends.friendList.length === 0){
@@ -75,7 +99,7 @@
 					.appendTo('#container-freinds');
 				}
 				for(var i=0; i<friends.friendList.length; i++){
-					$(drawFriend(friends.friendList[i]))
+					$('<div class="container-friend">' + '<p>' + friends.friendList[i].lolacc + ' ('+ friends.friendList[i].username + ')' + '</p>'  + '</div>')
 					.appendTo('#container-freinds');
 					$('<button class="friend-remove">remove</button>').on('click', { user_id : friends.friendList[i]._id }, function(event){
 						$.ajax({
@@ -86,6 +110,7 @@
 								if(data.error){
 									$('#errorMessage')[0].innerHTML = data.error;
 								} else {
+									$('#errorMessage')[0].innerHTML = '';
 									drawFriends();
 								}
 							}
@@ -112,6 +137,7 @@
 		$('#EditFriend').on('click', function(){
 			$('#container-junglertimertool').hide();
 			$('#container-matchhistory').hide();
+			$('#errorMessage')[0].innerHTML = '';
 			drawFriends();
 		});
 		$('#JunglerTimerTool').on('click', function(){
@@ -120,12 +146,57 @@
 			$('#container-junglertimertool').show();
 		});
 		$('#History').on('click', function(){
+			matchHistory(lolserver, lolid);
+		});
+		$('#btnAddFriend').on('click', function(){
+			$('#container-freinds').hide();
+			$('#container-addfriend').hide();
+			$.ajax({
+				url: '/api/friends/add',
+				type: 'POST',
+				data: "username="+encodeURIComponent($('#inputUsr')[0].value) +
+								"&lolacc="+encodeURIComponent($('#inputLOLAcc')[0].value)+
+								"&lolserver="+encodeURIComponent($('#inputLOLServer')[0].value),
+				success: function(data) {
+					if(data.validation){
+						$('#errorMessage')[0].innerHTML = data.validation;
+					} else {
+						$('#errorMessage')[0].innerHTML = '';
+					}
+					if(data.error){
+						$('#errorMessage')[0].innerHTML = data.error;
+					} else {
+						$('#inputUsr')[0].value = '';
+						$('#inputLOLAcc')[0].value = '';
+
+						$('#container-freinds').show();
+						$('#container-addfriend').show();
+						drawFriends();
+					}
+				}	
+			});
+		});
+
+		$('#btnJTTBlueGolem').on('click', function(){
+			BlueGomlemAnimation();
+			audioNotification.play();
+		});
+
+		function BlueGomlemAnimation(){
+			var BlueTimeInterval = setInterval(function(){
+				myTimer()}, 1000);
+			var canvas = $('#BlueTeamBlueGolem')[0];
+			var ctx = canvas.getContext('2d');
+		}
+
+		function matchHistory(lolserver, lolid){
 			$('#container-junglertimertool').hide();
 			$('#container-friendlist').hide();
 			$('#container-history').empty();
 			$('#container-matchhistory').show();
 			$('#wait-history').show();
-			$.get( "/api/history", function(data) {
+
+			$.get( "/api/history/"+ encodeURIComponent(lolserver) + '/' + encodeURIComponent(lolid), function(data) {
 				$('#wait-history').hide();
 				console.log(data);
 				for(var i=0; i<data.history.games.length; i++){
@@ -136,14 +207,27 @@
 						isWon = 'game-lost';
 					}
 					$('<div class="' + isWon + '">' +
-						'<div id="playerChampionImage'+ i +'">' +	
-						'</div>' + '<p class="summoners-text">Summoners: </p>' +
-						'<div id="playerSummonersSpells' + i + '"> ' +
-							'<div id="playerSummoners' + i + 'spell1"></div>' +
-							'<div id="playerSummoners' + i + 'spell2"></div>' + 
-						'</div>' + '<p class="items-text">Items: </p>' +
-						'<div id="playerItems'+ i + '"></div>' +
-						'<div id="playerStats' + i +'"></div>' +
+						'<div id="playerChampionImage'+ i +'">' + '</div>' +
+						'<div class="statsDiv">' +
+							'<div id="playerStats' + i +'"></div>' +
+						'</div>' +
+						'<div class="teamsDiv">' +
+							'<p class="teams-text">Purple team: </p>' + 
+							'<div id="purpleTeam' + i + '"></div>' + '</br>' + '</br>' +
+							'<p class="teams-text">Blue team: </p>' +
+							'<div id="blueTeam' + i + '"></div>' +
+						'</div>' +
+						'<div class="summonersDiv">' +
+							'<p class="summoners-text">Summoners: </p>' +
+							'<div id="playerSummonersSpells' + i + '"> ' +
+								'<div id="playerSummoners' + i + 'spell1"></div>' +
+								'<div id="playerSummoners' + i + 'spell2"></div>' + 
+							'</div>' + 
+						'</div>' +
+						'<div class="itemsDiv">' +
+							'<p class="items-text">Items: </p>' +
+							'<div id="playerItems'+ i + '"></div>' +
+						'</div>' + 
 					'</div>')
 					.appendTo('#container-history');
 
@@ -181,7 +265,7 @@
 						$(this).empty();
 					});
 					// PLAYER STATS KDA
-					$("<p class='stats'> kills: " + data.history.games[i].player.KDA.kills + " deaths: " + data.history.games[i].player.KDA.deaths + " assists: " + data.history.games[i].player.KDA.assists + "</p>")
+					$("<p class='stats-text'> kills: " + data.history.games[i].player.KDA.kills + " deaths: " + data.history.games[i].player.KDA.deaths + " assists: " + data.history.games[i].player.KDA.assists + "</p>")
 					.appendTo('#playerStats' + i);
 					// SUMMONER SPELL 1
 					$('#playerSummoners'+i+'spell1').css({
@@ -226,47 +310,29 @@
 						})
 						.appendTo('#playerItems' + i);
 					}
-					
+					// TEAMS
+					for(var k=0; k<data.history.games[i].teams.length; k++){
+						var player = $('<div class="teams" id="game' + i + 'player' + k + '"></div>')
+						.css({
+							width: data.history.games[i].teams[k].player.champion.img.sprite.width,
+							height: data.history.games[i].teams[k].player.champion.img.sprite.height,
+							background: data.history.games[i].teams[k].player.champion.img.sprite.background
+						})
+						.on('mouseenter', {name: data.history.games[i].teams[k].player.champion.name}, function(event){
+							$(this).empty();
+							$('<div class="info-hover"><p class="info-hover-text">' + event.data.name + '</p></div>').appendTo(this);
+						})
+						.on('mouseleave', {name: data.history.games[i].teams[k].player.champion.name}, function(event){
+							$(this).empty();
+						});
+						if (data.history.games[i].teams[k].player.teamId === 200){
+							player.appendTo('#blueTeam' + i);
+						} else {
+							player.appendTo('#purpleTeam' + i);
+						}
+					}
 				}
 			});
-		});
-		$('#btnAddFriend').on('click', function(){
-			$('#container-freinds').hide();
-			$('#container-addfriend').hide();
-			$.ajax({
-				url: '/api/friends/add',
-				type: 'POST',
-				data: "username="+encodeURIComponent($('#inputUsr')[0].value) +
-								"&lolacc="+encodeURIComponent($('#inputLOLAcc')[0].value)+
-								"&lolserver="+encodeURIComponent($('#inputLOLServer')[0].value),
-				success: function(data) {
-					if(data.validation){
-						$('#errorMessage')[0].innerHTML = data.validation;
-					}
-					if(data.error){
-						$('#errorMessage')[0].innerHTML = data.error;
-					} else {
-						$('#inputUsr')[0].value = '';
-						$('#inputLOLAcc')[0].value = '';
-
-						$('#container-freinds').show();
-						$('#container-addfriend').show();
-						drawFriends();
-					}
-				}	
-			});
-		});
-
-		$('#btnJTTBlueGolem').on('click', function(){
-			BlueGomlemAnimation();
-			audioNotification.play();
-		});
-
-		function BlueGomlemAnimation(){
-			var BlueTimeInterval = setInterval(function(){
-				myTimer()}, 1000);
-			var canvas = $('#BlueTeamBlueGolem')[0];
-			var ctx = canvas.getContext('2d');
 		}
 	});
 </script>

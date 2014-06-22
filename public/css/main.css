@@ -1,3 +1,6 @@
+p {
+	color: white;
+}
 #container-main {
 	position: absolute;
     width: 600px;
@@ -20,8 +23,23 @@
 #container-matchhistory {
 	display: none;
 }
+#friends {
+	width: 140px;
+	margin-left: -164px;
+	margin-top: 210px;
+	padding-left: 10px;
+	padding-right: 10px;
+	float: left;
+	position: fixed;
+	background-color: #222222;
+	border:2px solid black;
+	border-radius: 10px;
+}
+#container-addfriend{
+	background-color: #333333;
+}
 #menu {
-	height:200px;
+	height: 200px;
 	width: 140px;
 	margin-left: -164px;
 	padding-left: 10px;
@@ -77,8 +95,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 	height: 25px;
 	margin-top: 10px;
 }
-.container-eror{
-	background-color: pink;
+.container-erorr{
+	background-color: white;
 	color: red;
 }
 #recoveryAcc {
@@ -104,8 +122,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 	margin-top: 10px;
 	padding: 10px;
 	border: 1px solid black;
-	height: 350px;
-	width: 450px;
+	height: 450px;
+	width: 500px;
 	/*background-color: #6AA642;*/
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(8%,#000000), color-stop(13%,#73880a), color-stop(37%,#6aa642), color-stop(60%,#6aa642), color-stop(86%,#73880a), color-stop(92%,#000000), color-stop(100%,#000000));
 }
@@ -113,18 +131,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 	margin-top: 10px;
 	padding: 10px;
 	border: 1px solid black;
-	height: 350px;
-	width: 450px;
+	height: 450px;
+	width: 500px;
 	background-color: #E02D2D;
 }
 .playerItems {
 	position: relative;
 }
-.stats{
-	float: left;
-	color: white;
-}
-.summoners-text {
+.summoners-text, .teams-text {
 	height: 0px;
 	color: white;
 }
@@ -132,4 +146,32 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 	margin-top: 65px;
 	height: 0px;
 	color: white;
+}
+.stats-text{
+	float: left;
+	color: white;
+	font-size: 25px;
+}
+.teams {
+	float: left;
+}
+.teamsDiv{
+	float: left;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+.summonersDiv {
+	float: left;
+	margin-top: -80px;
+	margin-left: -120px;
+}
+.itemsDiv {
+	float : left;
+	margin-top: -30px;
+	margin-left : 20px;
+}
+.statsDiv {
+	float: left;
+	margin-top: -180px;
+	margin-left: 150px;
 }

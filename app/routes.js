@@ -43,7 +43,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/main', isLoggedIn, function(req, res) {
-		res.render('main.ejs');
+		res.render('main.ejs', { username: req.user.username, lolid: req.user.lolid, lolserver: req.user.lolserver, lolacc: req.user.lolacc });
 	});
 
 	app.get('/api/friends', isLoggedIn, function(req, res) {
@@ -90,8 +90,14 @@ module.exports = function(app, passport) {
 		});	
 	});
 
-	app.get('/api/history', isLoggedIn, function(req, res) {
-		request('https://euw.api.pvp.net/api/lol/' + req.user.lolserver + '/v1.3/game/by-summoner/' + req.user.lolid + '/recent?api_key=751902db-247b-49c9-b2cb-2ec83465b2ad', function (error, response, body) {
+	app.get('/api/history/:server/:id', isLoggedIn, function(req, res) {
+		id = sanitize.HTML(req.params.id);
+		lolserver = sanitize.HTML(req.params.server);
+		if (!inputValidation.LOLServer(lolserver)){
+			res.json({ validation : 'The allowed server are EUW and EUNE' });
+			return ;
+		}
+		request('https://euw.api.pvp.net/api/lol/' + lolserver + '/v1.3/game/by-summoner/' + id + '/recent?api_key=751902db-247b-49c9-b2cb-2ec83465b2ad', function (error, response, body) {
 		    if (response.statusCode == 404) {
 		        res.json({ error : 'error' });
 		        return;
