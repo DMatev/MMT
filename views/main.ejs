@@ -24,7 +24,7 @@
 				</audio>
 				<div>
 					<p>Blue Golem</p>
-					<canvas width="85" height="55" id="BlueTeamBlueGolem" style="background-color: white">Your browser does not support the HTML5 canvas tag.</canvas>
+					<canvas width="65" height="35" id="BlueTeamBlueGolem">Your browser does not support the HTML5 canvas tag.</canvas>
 					<button id="btnJTTBlueGolem">Start/Reset</button>
 				</div>
 			</div>
@@ -194,30 +194,38 @@
 				clearInterval(this.mainLoopInterval);
 				audioNotification.pause();
 				this.timeLeft = 0;
+				this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
 			},
 			start: function(){
-				this.timeLeft = 360000;
+				var that = this;
+				//this.timeLeft = 360000;
+				this.timeLeft = 4000;
 				this.timeOutInterval = setTimeout(function(){
 					audioNotification.currentTime = 0;
 					audioNotification.play();
-				}, 2000);
+					//that.stop();
+					//this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+				}, 4000);
 				this.animate();
 			},
 			animate: function(){
-				var that = this;
+				var that = this, seconds, minutes, time;
 				this.mainLoopInterval = setInterval(function(){
 					that.ctx.clearRect(0,0,that.canvas.width,that.canvas.height);
-					that.ctx.font="20px Georgia";
-					var seconds = parseInt((that.timeLeft / 1000) % 60) ;
-					var minutes = parseInt((that.timeLeft / (1000*60)) % 60);
-					var time;
+					that.ctx.font = "20px Georgia";
+					that.ctx.fillStyle = "white";
+					seconds = parseInt((that.timeLeft / 1000) % 60) ;
+					minutes = parseInt((that.timeLeft / (1000*60)) % 60);
 					if (minutes > 0){
+						if (seconds == 0){
+							seconds += '0'; 
+						}
 						time = minutes + ':' + seconds;
 					} else {
 						time = seconds;
 					}
 					
-					that.ctx.fillText(time,10,30);
+					that.ctx.fillText(time,10,20);
 					that.timeLeft -= 1000;
 				}, 1000);
 			}
