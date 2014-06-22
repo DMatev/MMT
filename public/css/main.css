@@ -106,7 +106,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', end
 	border: 1px solid black;
 	height: 350px;
 	width: 450px;
-	background-color: #6AA642;
+	/*background-color: #6AA642;*/
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(8%,#000000), color-stop(13%,#73880a), color-stop(37%,#6aa642), color-stop(60%,#6aa642), color-stop(86%,#73880a), color-stop(92%,#000000), color-stop(100%,#000000));
 }
 .game-lost {
 	margin-top: 10px;
