@@ -306,7 +306,23 @@
 						$(this).empty();
 					});
 					// PLAYER STATS KDA
-					$("<p class='stats-text'> kills: " + data.history.games[i].player.KDA.kills + " deaths: " + data.history.games[i].player.KDA.deaths + " assists: " + data.history.games[i].player.KDA.assists + "</p>")
+					var kills, deaths, assists;
+					if (data.history.games[i].player.KDA.kills !== undefined){
+						kills = data.history.games[i].player.KDA.kills;
+					} else {
+						kills = 0;
+					}
+					if (data.history.games[i].player.KDA.deaths !== undefined){
+						deaths = data.history.games[i].player.KDA.deaths;
+					} else {
+						deaths = 0;
+					}
+					if (data.history.games[i].player.KDA.assists !== undefined){
+						assists = data.history.games[i].player.KDA.assists;
+					} else {
+						assists = 0;
+					}
+					$("<p class='stats-text'> kills: " + kills + " deaths: " + deaths + " assists: " + assists + "</p>")
 					.appendTo('#playerStats' + i);
 					// SUMMONER SPELL 1
 					$('#playerSummoners'+i+'spell1').css({
