@@ -356,7 +356,7 @@
 
 			$.get( "/api/history/"+ encodeURIComponent(lolserver) + '/' + encodeURIComponent(lolid), function(data) {
 				$('#wait-history').hide();
-				$('<p>' + lolacc + '</p>').appendTo('#container-history');
+				$('<p><span class="matchHistory-username">' + lolacc + '</span>`s match history</p>').appendTo('#container-history');
 				for(var i=0; i<data.history.games.length; i++){
 					var isWon;
 					if (data.history.games[i].isWon){
