@@ -22,11 +22,28 @@
 				 <source src="/audio/notification.mp3" type="audio/mp3">
 				  Your browser does not support HTML5 audio.
 				</audio>
-				<div>
-					<p>Blue Golem</p>
-					<canvas width="165" height="135" id="BlueTeamBlueGolem">Your browser does not support the HTML5 canvas tag.</canvas>
-					<button id="btnJTTBlueGolem">Start/Reset</button>
+
+				<div class="JunglerTimerToolElement">
+					<p>Baron</p>
+					<canvas width="165" height="135" id="Baron">Your browser does not support the HTML5 canvas tag.</canvas>
+					<button id="btnBaron">Start/Reset</button>
 				</div>
+				<div class="JunglerTimerToolElement">
+					<p>Drake</p>
+					<canvas width="165" height="135" id="Drake">Your browser does not support the HTML5 canvas tag.</canvas>
+					<button id="btnDrake">Start/Reset</button>
+				</div>
+				<div class="JunglerTimerToolElement">
+					<p>Blue Golem</p>
+					<canvas width="165" height="135" id="BlueGolem">Your browser does not support the HTML5 canvas tag.</canvas>
+					<button id="btnBlueGolem">Start/Reset</button>
+				</div>
+				<div class="JunglerTimerToolElement">
+					<p>Red Golem</p>
+					<canvas width="165" height="135" id="RedGolem">Your browser does not support the HTML5 canvas tag.</canvas>
+					<button id="btnRedGolem">Start/Reset</button>
+				</div>
+
 			</div>
 
 			<div id="container-friendlist">
@@ -61,6 +78,71 @@
 	$(function() {
 		var lolid =<%-JSON.stringify(lolid)%>, lolserver =<%-JSON.stringify(lolserver)%>;
 		var audioNotification = $('#audioNotification')[0];
+		var imgGolem = new Image();
+		imgGolem.src = 'images/golem.png';
+
+		var Baron = new JunglerTimerTool(420000, $('#Baron')[0], $('#Baron')[0].getContext('2d'), imgGolem);
+		var Drake = new JunglerTimerTool(360000, $('#Drake')[0], $('#Drake')[0].getContext('2d'), imgGolem);
+		var BlueGolem = new JunglerTimerTool(300000, $('#BlueGolem')[0], $('#BlueGolem')[0].getContext('2d'), imgGolem);
+		var RedGolem = new JunglerTimerTool(300000, $('#RedGolem')[0], $('#RedGolem')[0].getContext('2d'), imgGolem);
+
+		function JunglerTimerTool(length, canvas, ctx, img){
+			this.length = length;
+			this.timeOutInterval = null;
+			this.mainLoopInterval = null;
+			this.timeLeft = null;
+			this.img = img;
+			this.canvas = canvas;
+			this.ctx = ctx;
+		}
+		JunglerTimerTool.prototype.stop = function(){
+			clearInterval(this.timeOutInterval);
+			clearInterval(this.mainLoopInterval);
+			this.timeLeft = 0;
+			this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+		};
+		JunglerTimerTool.prototype.start = function(){
+			var that = this;
+			this.timeLeft = that.length;
+			this.timeOutInterval = setTimeout(function(){
+				audioNotification.currentTime = 0;
+				audioNotification.play();
+				setTimeout(function(){
+					audioNotification.pause();
+				},2000);
+			}, that.length);
+			this.animate();
+		};
+		JunglerTimerTool.prototype.animate = function(){
+			var that = this, seconds, minutes, time;
+			that.ctx.clearRect(0,0,that.canvas.width,that.canvas.height);
+			this.mainLoopInterval = setInterval(function(){
+				that.ctx.clearRect(0,0,that.canvas.width,that.canvas.height);
+				if (that.timeLeft === 0){
+					that.stop();
+					that.start();
+				}
+				that.ctx.font = "20px Georgia";
+				that.ctx.fillStyle = "white";
+				seconds = parseInt((that.timeLeft / 1000) % 60) ;
+				minutes = parseInt((that.timeLeft / (1000*60)) % 60);
+				if (minutes > 0){
+					if (seconds.toString().length === 1){
+						seconds += '0'; 
+					}
+					time = minutes + ':' + seconds;
+				} else {
+					time = seconds;
+				}				
+				that.ctx.fillText(time,10,20);
+				that.timeLeft -= 1000;
+				//slider
+				roundRect(that.ctx,0,99,100,22,5,false,true);
+				that.ctx.fillStyle = "blue";
+				roundRect(that.ctx,0,100,100*that.timeLeft/300000,20,5,true,true);
+				that.ctx.drawImage(that.img,10,10);
+			}, 1000);
+		};
 
 		drawFriendList();
 
@@ -177,109 +259,66 @@
 			});
 		});
 
-		$('#btnJTTBlueGolem').on('click', function(){
-			JunglerTool.stop();
-			JunglerTool.start();
-
+		$('#btnBaron').on('click', function(){
+			Baron.stop();
+			Baron.start();
+		});
+		$('#btnDrake').on('click', function(){
+			Drake.stop();
+			Drake.start();
+		});
+		$('#btnRedGolem').on('click', function(){
+			RedGolem.stop();
+			RedGolem.start();
+		});
+		$('#btnBlueGolem').on('click', function(){
+			BlueGolem.stop();
+			BlueGolem.start();
 		});
 
-		var JunglerTool = {
-			timeOutInterval: null,
-			mainLoopInterval: null,
-			timeLeft: null,
-			canvas: $('#BlueTeamBlueGolem')[0],
-			ctx: $('#BlueTeamBlueGolem')[0].getContext('2d'),
-			stop: function(){
-				clearInterval(this.timeOutInterval);
-				clearInterval(this.mainLoopInterval);
-				audioNotification.pause();
-				this.timeLeft = 0;
-				this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-			},
-			start: function(){
-				var that = this;
-				//this.timeLeft = 360000;
-				this.timeLeft = 300000;
-				this.timeOutInterval = setTimeout(function(){
-					audioNotification.currentTime = 0;
-					//audioNotification.play();
-					//that.stop();
-					//this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-				}, 4000);
-				this.animate();
-			},
-			animate: function(){
-				var that = this, seconds, minutes, time;
-				this.mainLoopInterval = setInterval(function(){
-					that.ctx.clearRect(0,0,that.canvas.width,that.canvas.height);
-					that.ctx.font = "20px Georgia";
-					that.ctx.fillStyle = "white";
-					seconds = parseInt((that.timeLeft / 1000) % 60) ;
-					minutes = parseInt((that.timeLeft / (1000*60)) % 60);
-					if (minutes > 0){
-						if (seconds == 0){
-							seconds += '0'; 
-						}
-						time = minutes + ':' + seconds;
-					} else {
-						time = seconds;
-					}
-					
-					that.ctx.fillText(time,10,20);
-					that.timeLeft -= 1000;
-					//slider
-					roundRect(that.ctx,0,99,100,22,5,false,true);
-					that.ctx.fillStyle = "blue";
-					//that.ctx.fillRect(0,100,100*that.timeLeft/300000,20);
-					roundRect(that.ctx,0,100,100*that.timeLeft/300000,20,5,true,true);
-					that.ctx.drawImage('public/images/golem.png',10,10);
-				}, 1000);
-			}
-		};
+		
 
 		//MAKES ROUND RECTANGLE
 		function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
- 		 if (typeof stroke == "undefined" ) {
-   			 stroke = true;
-  			}
- 		 if (typeof radius === "undefined") {
-   			 radius = 5;
- 			 }
+	 		if (typeof stroke == "undefined" ) {
+	   			stroke = true;
+	  		}
+	 		if (typeof radius === "undefined") {
+	   			radius = 5;
+	 		}
 
- 		var grd=ctx.createLinearGradient(x,y,x,y+height);
- 		grd.addColorStop(0,'#cedbe9'); 
- 		grd.addColorStop(0.14,'#6199c7');
- 		grd.addColorStop(0.30,'#3a84c3');
- 		grd.addColorStop(0.40,'#419ad6');
- 		grd.addColorStop(0.60,'#4bb8f0');
- 		grd.addColorStop(0.80,'#3a8bc2');
- 		grd.addColorStop(1,'#aac5de');
- 		ctx.fillStyle = grd;
-
-
-  		ctx.beginPath();
- 	 	ctx.moveTo(x + radius, y);
-  		ctx.lineTo(x + width - radius, y);
-  		ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-  		ctx.lineTo(x + width, y + height - radius);
-  		ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-  		ctx.lineTo(x + radius, y + height);
-  		ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-  		ctx.lineTo(x, y + radius);
-  		ctx.quadraticCurveTo(x, y, x + radius, y);
-  		ctx.closePath();
-  		if (stroke) {
-    		ctx.stroke();
-  		}
-  		if (fill) {
-    		ctx.fill();
-  		}else{
-  			ctx.fillStyle='white';
-  			ctx.fill();
-  		}       
-	}
+	 		var grd=ctx.createLinearGradient(x,y,x,y+height);
+	 		grd.addColorStop(0,'#cedbe9'); 
+	 		grd.addColorStop(0.14,'#6199c7');
+	 		grd.addColorStop(0.30,'#3a84c3');
+	 		grd.addColorStop(0.40,'#419ad6');
+	 		grd.addColorStop(0.60,'#4bb8f0');
+	 		grd.addColorStop(0.80,'#3a8bc2');
+	 		grd.addColorStop(1,'#aac5de');
+	 		ctx.fillStyle = grd;
 
 
+	  		ctx.beginPath();
+	 	 	ctx.moveTo(x + radius, y);
+	  		ctx.lineTo(x + width - radius, y);
+	  		ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+	  		ctx.lineTo(x + width, y + height - radius);
+	  		ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+	  		ctx.lineTo(x + radius, y + height);
+	  		ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+	  		ctx.lineTo(x, y + radius);
+	  		ctx.quadraticCurveTo(x, y, x + radius, y);
+	  		ctx.closePath();
+	  		if (stroke) {
+	    		ctx.stroke();
+	  		}
+	  		if (fill) {
+	    		ctx.fill();
+	  		} else {
+	  			ctx.fillStyle='white';
+	  			ctx.fill();
+	  		}       
+		}
 
 
 
