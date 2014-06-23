@@ -76,16 +76,23 @@
 <script src="/js/lib/jquery-1.11.0.min.js"></script>
 <script type="text/javascript">
 	$(function() {
-		var lolid =<%-JSON.stringify(lolid)%>, lolserver =<%-JSON.stringify(lolserver)%>;
+		var lolid =<%-JSON.stringify(lolid)%>, lolserver =<%-JSON.stringify(lolserver)%>, lolacc =<%-JSON.stringify(lolacc)%>;
 		var audioNotification = $('#audioNotification')[0];
-		var imgGolem = new Image();
-		imgGolem.src = 'images/golem.png';
+		var imgBaron = new Image();
+		imgBaron.src = 'images/baron.png';
+		var imgDrake = new Image();
+		imgDrake.src = 'images/dragon.png';
+		var imgBlueGolem = new Image();
+		imgBlueGolem.src = 'images/blueGolem.png';
+		var imgRedGolem = new Image();
+		imgRedGolem.src = 'images/redGolem.png';
+	
+		var Baron = new JunglerTimerTool(420000, $('#Baron')[0], $('#Baron')[0].getContext('2d'), imgBaron);
+		var Drake = new JunglerTimerTool(360000, $('#Drake')[0], $('#Drake')[0].getContext('2d'), imgDrake);
+		var BlueGolem = new JunglerTimerTool(300000, $('#BlueGolem')[0], $('#BlueGolem')[0].getContext('2d'), imgBlueGolem);
+		var RedGolem = new JunglerTimerTool(300000, $('#RedGolem')[0], $('#RedGolem')[0].getContext('2d'), imgRedGolem);
 
-		var Baron = new JunglerTimerTool(420000, $('#Baron')[0], $('#Baron')[0].getContext('2d'), imgGolem);
-		var Drake = new JunglerTimerTool(360000, $('#Drake')[0], $('#Drake')[0].getContext('2d'), imgGolem);
-		var BlueGolem = new JunglerTimerTool(300000, $('#BlueGolem')[0], $('#BlueGolem')[0].getContext('2d'), imgGolem);
-		var RedGolem = new JunglerTimerTool(300000, $('#RedGolem')[0], $('#RedGolem')[0].getContext('2d'), imgGolem);
-
+		var isRuningMatchHistory = false;
 		function JunglerTimerTool(length, canvas, ctx, img){
 			this.length = length;
 			this.timeOutInterval = null;
@@ -115,7 +122,6 @@
 		};
 		JunglerTimerTool.prototype.animate = function(){
 			var that = this, seconds, minutes, time;
-			that.ctx.clearRect(0,0,that.canvas.width,that.canvas.height);
 			this.mainLoopInterval = setInterval(function(){
 				that.ctx.clearRect(0,0,that.canvas.width,that.canvas.height);
 				if (that.timeLeft === 0){
@@ -128,21 +134,29 @@
 				minutes = parseInt((that.timeLeft / (1000*60)) % 60);
 				if (minutes > 0){
 					if (seconds.toString().length === 1){
-						seconds += '0'; 
-					}
-					time = minutes + ':' + seconds;
+						time = minutes + ':' + '0' + seconds;
+					} else {
+						time = minutes + ':' + seconds;
+					}				
 				} else {
 					time = seconds;
 				}				
 				that.ctx.fillText(time,10,20);
 				that.timeLeft -= 1000;
 				//slider
-				roundRect(that.ctx,0,99,100,22,5,false,true);
+				roundRect(that.ctx,0,99,15*that.length/60000,22,5,false,true);
 				that.ctx.fillStyle = "blue";
-				roundRect(that.ctx,0,100,100*that.timeLeft/300000,20,5,true,true);
+				roundRect(that.ctx,0,100,(15*that.length/60000)*that.timeLeft/that.length,20,5,true,true);
 				that.ctx.drawImage(that.img,10,10);
 			}, 1000);
 		};
+
+		function stopJTT(){
+			Baron.stop();
+			Drake.stop();
+			RedGolem.stop();
+			BlueGolem.stop();
+		}
 
 		drawFriendList();
 
@@ -157,8 +171,8 @@
 				}
 				for(var i=0; i<friends.friendList.length; i++){
 					$('<p>' + friends.friendList[i].lolacc +'</p>')
-					.on('click', { server: friends.friendList[i].lolserver, id: friends.friendList[i].lolid },function(event){
-						matchHistory(event.data.server, event.data.id);
+					.on('click', { server: friends.friendList[i].lolserver, id: friends.friendList[i].lolid, username: friends.friendList[i].lolacc }, function(event){
+						matchHistory(event.data.server, event.data.id, event.data.username);
 					})
 					.hover(
 					  function() {
@@ -220,15 +234,23 @@
 			$('#container-junglertimertool').hide();
 			$('#container-matchhistory').hide();
 			$('#errorMessage')[0].innerHTML = '';
+			stopJTT();
 			drawFriends();
 		});
 		$('#JunglerTimerTool').on('click', function(){
 			$('#container-friendlist').hide();
 			$('#container-matchhistory').hide();
 			$('#container-junglertimertool').show();
+
+			Baron.ctx.drawImage(Baron.img,10,10);
+			Drake.ctx.drawImage(Drake.img,10,10);
+			BlueGolem.ctx.drawImage(BlueGolem.img,10,10);
+			RedGolem.ctx.drawImage(RedGolem.img,10,10);
+
 		});
 		$('#History').on('click', function(){
-			matchHistory(lolserver, lolid);
+			stopJTT();
+			matchHistory(lolserver, lolid, lolacc);
 		});
 		$('#btnAddFriend').on('click', function(){
 			$('#container-freinds').hide();
@@ -322,15 +344,19 @@
 
 
 
-		function matchHistory(lolserver, lolid){
+		function matchHistory(lolserver, lolid, lolacc){
 			$('#container-junglertimertool').hide();
 			$('#container-friendlist').hide();
 			$('#container-history').empty();
 			$('#container-matchhistory').show();
 			$('#wait-history').show();
+			stopJTT();
+			if(!isRuningMatchHistory){
+				isRuningMatchHistory = true;
 
 			$.get( "/api/history/"+ encodeURIComponent(lolserver) + '/' + encodeURIComponent(lolid), function(data) {
 				$('#wait-history').hide();
+				$('<p>' + lolacc + '</p>').appendTo('#container-history');
 				for(var i=0; i<data.history.games.length; i++){
 					var isWon;
 					if (data.history.games[i].isWon){
@@ -491,8 +517,10 @@
 							player.appendTo('#purpleTeam' + i);
 						}
 					}
+					isRuningMatchHistory = false;
 				}
 			});
+			}
 		}
 	});
 </script>
