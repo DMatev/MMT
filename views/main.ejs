@@ -6,6 +6,9 @@
 </head>
 <body>
 	<div id="container-main">
+		<div id="user">
+			<h2><%= username %></h2>
+		</div>
 		<div id="menu">
 			<p class="menu-option" id="LogOut">Log Out</p>
 			<p class="menu-option" id="EditFriend">Edit Friend List</p>
@@ -15,6 +18,10 @@
 		<div id="friends">
 		</div>
 		<div id="main-content"> 
+
+			<div id="container-default">
+				<h1>Welcome to LOLBuddies<h1>
+			</div>
 
 			<div id="container-junglertimertool">
 				<p> Jungler Timer Tool</p>
@@ -231,6 +238,7 @@
 		});
 
 		$('#EditFriend').on('click', function(){
+			$('#container-default').hide();
 			$('#container-junglertimertool').hide();
 			$('#container-matchhistory').hide();
 			$('#errorMessage')[0].innerHTML = '';
@@ -238,6 +246,7 @@
 			drawFriends();
 		});
 		$('#JunglerTimerTool').on('click', function(){
+			$('#container-default').hide();
 			$('#container-friendlist').hide();
 			$('#container-matchhistory').hide();
 			$('#container-junglertimertool').show();
@@ -345,6 +354,7 @@
 
 
 		function matchHistory(lolserver, lolid, lolacc){
+			$('#container-default').hide();
 			$('#container-junglertimertool').hide();
 			$('#container-friendlist').hide();
 			$('#container-history').empty();
