@@ -19,14 +19,10 @@
 			<button class="input-button" id="btnSignUp">Sign Up</button>
 		</div>
 	</div>
-<script src="/js/lib/jquery-1.11.0.min.js"></script>
 <script type="text/javascript">
-	$(function() {
-		$('#btnSignUp').on('click', function(){
-			window.location = '/signup';
-		})
-
-	});
+	document.getElementById('btnSignUp').addEventListener('click', function() {
+		window.location = '/signup';
+	}, true);	
 </script>
 </body>
 </html>

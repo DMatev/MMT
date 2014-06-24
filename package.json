@@ -7,16 +7,17 @@
     "static-favicon": "~1.0.0",
     "mongoose": "~3.8.1",
     "sanitize-html": "~1.1.5",
-    "passport" : "~0.1.17",     
-    "passport-local" : "~0.1.6",  
-    "connect-flash" : "~0.1.1",
-    "bcrypt-nodejs" : "latest"
+    "request": "~2.36.0",
+    "passport": "~0.1.17",
+    "passport-local": "~0.1.6",
+    "connect-flash": "~0.1.1",
+    "bcrypt-nodejs": "latest"
   },
   "subdomain": "mmt-project",
   "scripts": {
     "start": "node index.js"
   },
-  "version": "0.0.0-3",
+  "version": "0.0.0-4",
   "engines": {
     "node": "0.10.x"
   }

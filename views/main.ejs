@@ -6,9 +6,6 @@
 </head>
 <body>
 	<div id="container-main">
-		<div id="user">
-			<h2><%= username %></h2>
-		</div>
 		<div id="menu">
 			<p class="menu-option" id="LogOut">Log Out</p>
 			<p class="menu-option" id="EditFriend">Edit Friend List</p>
@@ -20,7 +17,7 @@
 		<div id="main-content"> 
 
 			<div id="container-default">
-				<h1>Welcome to LOLBuddies<h1>
+				<h1 style="text-align: center">Welcome to LOLBuddies<h1>
 			</div>
 
 			<div id="container-junglertimertool">
@@ -66,7 +63,7 @@
 					  <option value="euw">EUW</option>
 					  <option value="eune">EUNE</option>
 					</select>
-					<button class="input-button" id="btnAddFriend">Add</button>
+					<button class="input-button" id="btnAddFriend">add</button>
 				</div>
 			</div>
 
@@ -391,10 +388,8 @@
 						'</div>' +
 						'<div class="summonersDiv">' +
 							'<p class="summoners-text">Summoners: </p>' +
-							'<div id="playerSummonersSpells' + i + '"> ' +
-								'<div id="playerSummoners' + i + 'spell1"></div>' +
-								'<div id="playerSummoners' + i + 'spell2"></div>' + 
-							'</div>' + 
+							'<div id="playerSummoners' + i + 'spell1"></div>' +
+							'<div id="playerSummoners' + i + 'spell2"></div>' + 
 						'</div>' +
 						'<div class="itemsDiv">' +
 							'<p class="items-text">Items: </p>' +
@@ -403,24 +398,12 @@
 					'</div>')
 					.appendTo('#container-history');
 
-					//SOME CSS FOR THE ABOVE
-					
-					$('#playerSummoners' + i + 'spell1').css({
-						'position': 'relative',
-						'float': 'left',
-						'border-radius': 10 +'px'
-					});
-					$('#playerSummoners' + i + 'spell2').css({
-						'position': 'relative',
-						'float': 'left',
-						'border-radius': 10 +'px',
-					});
+					//SOME CSS FOR THE ABOVE		
 					$('#playerItems' + i).css({
 						'float': 'left',
 						'margin-top': -50 +'px',
 						'height': 48 + 'px',
-						'width': 450 + 'px',
-						'border-radius': 10 +'px'
+						'width': 450 + 'px'
 					});
 					$('#playerStats' + i).css({
 						'float': 'left',
@@ -428,6 +411,7 @@
 						'height': 48 + 'px',
 						'width': 450 + 'px'
 					});
+
 					// PLAYER CHAMPION IMAGE
 					$('#playerChampionImage'+i).css({
 						'position': 'absolute',
@@ -465,6 +449,8 @@
 					.appendTo('#playerStats' + i);
 					// SUMMONER SPELL 1
 					$('#playerSummoners'+i+'spell1').css({
+						position: 'relative',
+					 	float: 'left',
 						width: data.history.games[i].player.summoners.spell1.img.sprite.width,
 						height: data.history.games[i].player.summoners.spell1.img.sprite.height,
 						background: data.history.games[i].player.summoners.spell1.img.sprite.background
@@ -478,6 +464,8 @@
 					});
 					// SUMMONER SPELL 2
 					$('#playerSummoners'+i+'spell2').css({
+						'position': 'relative',
+					 	'float': 'left',
 						width: data.history.games[i].player.summoners.spell2.img.sprite.width,
 						height: data.history.games[i].player.summoners.spell2.img.sprite.height,
 						background: data.history.games[i].player.summoners.spell2.img.sprite.background

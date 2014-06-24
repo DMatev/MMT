@@ -67,13 +67,21 @@ module.exports = function(app, passport) {
             }
             if (response.statusCode == 200) {
             	var lolusername = sanitize.username(lolacc);
-				req.user.update({ $push: {'friendList': {'username': username, 'lolid': JSON.parse(body)[lolusername].id, 'lolacc': lolacc, 'lolusername': lolusername, 'lolserver': lolserver } } }, function(err) {
+            	console.log(lolusername)
+            	console.log(JSON.parse(body)[lolusername])
+            	for (var key in JSON.parse(body)) {
+            		if(key !== lolusername){
+            			res.json({ validation : 'That lol account has been deleted' });
+            			return;
+            		}
+            	}
+            	req.user.update({ $push: {'friendList': {'username': username, 'lolid': JSON.parse(body)[lolusername].id, 'lolacc': lolacc, 'lolusername': lolusername, 'lolserver': lolserver } } }, function(err) {
 					if(err){
 						res.json({ error: err });
 					} else {
 						res.json({ message: 'friend added' });
 					}					
-				});
+				});	
             }
         });
 	});
