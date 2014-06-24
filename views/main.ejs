@@ -97,7 +97,7 @@
 		var BlueGolem = new JunglerTimerTool(300000, $('#BlueGolem')[0], $('#BlueGolem')[0].getContext('2d'), imgBlueGolem);
 		var RedGolem = new JunglerTimerTool(300000, $('#RedGolem')[0], $('#RedGolem')[0].getContext('2d'), imgRedGolem);
 
-		var isRuningMatchHistory = false;
+		var isRuningMatchHistory = false, isRuningEditFriend = false;
 		function JunglerTimerTool(length, canvas, ctx, img){
 			this.length = length;
 			this.timeOutInterval = null;
@@ -216,6 +216,7 @@
 					})
 					.appendTo('#container-freinds');
 				}
+				isRuningMatchHistory = false;
 			});
 			$('#container-friendlist').show();
 		}
@@ -233,12 +234,15 @@
 		});
 
 		$('#EditFriend').on('click', function(){
-			$('#container-default').hide();
-			$('#container-junglertimertool').hide();
-			$('#container-matchhistory').hide();
-			$('#errorMessage')[0].innerHTML = '';
-			stopJTT();
-			drawFriends();
+			if(!isRuningMatchHistory){
+				isRuningMatchHistory = true;
+				$('#container-default').hide();
+				$('#container-junglertimertool').hide();
+				$('#container-matchhistory').hide();
+				$('#errorMessage')[0].innerHTML = '';
+				stopJTT();
+				drawFriends();
+			}
 		});
 		$('#JunglerTimerTool').on('click', function(){
 			$('#container-default').hide();
