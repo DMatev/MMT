@@ -91,6 +91,7 @@
 		var imgRedGolem = new Image();
 		imgRedGolem.src = 'images/redGolem.png';
 	
+
 		var Baron = new JunglerTimerTool(420000, $('#Baron')[0], $('#Baron')[0].getContext('2d'), imgBaron);
 		var Drake = new JunglerTimerTool(360000, $('#Drake')[0], $('#Drake')[0].getContext('2d'), imgDrake);
 		var BlueGolem = new JunglerTimerTool(300000, $('#BlueGolem')[0], $('#BlueGolem')[0].getContext('2d'), imgBlueGolem);
@@ -118,9 +119,6 @@
 			this.timeOutInterval = setTimeout(function(){
 				audioNotification.currentTime = 0;
 				audioNotification.play();
-				setTimeout(function(){
-					audioNotification.pause();
-				},2000);
 			}, that.length);
 			this.animate();
 		};
