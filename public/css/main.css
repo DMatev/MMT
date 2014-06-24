@@ -81,6 +81,8 @@ button {
 	margin-bottom: 10px;
 	padding: 5px;
 	background-color: #333333;
+	border:2px solid black;
+	border-radius: 10px;
 }
 .wait {
 	width: 32px;
@@ -130,21 +132,37 @@ button {
 .game-won {
 	margin-top: 10px;
 	padding: 10px;
-	height: 400px;
+	height: 300px;
 	width: 500px;
 	border-radius: 10px;
 	border:2px solid #c2c2c2;
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(8%,#000000), color-stop(14%,#0a3f00), color-stop(37%,#12b500), color-stop(60%,#12b500), color-stop(92%,#0a3f00), color-stop(100%,#000000));
+	background: #000000; /* Old browsers */
+background: -moz-linear-gradient(top,  #000000 0%, #000000 8%, #0a3f00 13%, #12b500 37%, #12b500 60%, #0a3f00 92%, #000000 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(8%,#000000), color-stop(13%,#0a3f00), color-stop(37%,#12b500), color-stop(60%,#12b500), color-stop(92%,#0a3f00), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #000000 0%,#000000 8%,#0a3f00 13%,#12b500 37%,#12b500 60%,#0a3f00 92%,#000000 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #000000 0%,#000000 8%,#0a3f00 13%,#12b500 37%,#12b500 60%,#0a3f00 92%,#000000 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #000000 0%,#000000 8%,#0a3f00 13%,#12b500 37%,#12b500 60%,#0a3f00 92%,#000000 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #000000 0%,#000000 8%,#0a3f00 13%,#12b500 37%,#12b500 60%,#0a3f00 92%,#000000 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+
 }
 .game-lost {
 	margin-top: 10px;
 	padding: 10px;
 	border: 1px solid black;
-	height: 400px;
+	height: 300px;
 	width: 500px;
 	border-radius: 10px;
 	border:2px solid #c2c2c2;
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(8%,#000000), color-stop(13%,#3f0000), color-stop(37%,#b20000), color-stop(60%,#b20000), color-stop(92%,#3f0000), color-stop(100%,#000000));
+	background: #000000; /* Old browsers */
+	background: -moz-linear-gradient(top,  #000000 0%, #000000 8%, #3f0000 13%, #b20000 37%, #b20000 60%, #3f0000 92%, #000000 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(8%,#000000), color-stop(13%,#3f0000), color-stop(37%,#b20000), color-stop(60%,#b20000), color-stop(92%,#3f0000), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #000000 0%,#000000 8%,#3f0000 13%,#b20000 37%,#b20000 60%,#3f0000 92%,#000000 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #000000 0%,#000000 8%,#3f0000 13%,#b20000 37%,#b20000 60%,#3f0000 92%,#000000 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #000000 0%,#000000 8%,#3f0000 13%,#b20000 37%,#b20000 60%,#3f0000 92%,#000000 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #000000 0%,#000000 8%,#3f0000 13%,#b20000 37%,#b20000 60%,#3f0000 92%,#000000 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+	box-shadow:         inset 0 0 20px #000000;
 }
 .playerItems {
 	position: relative;
@@ -169,24 +187,31 @@ button {
 .teamsDiv {
 	position:absolute;
 	margin-top: 200px;
-	margin-left: 20px;
 	padding-left:10px;
 	padding-right:10px;
 	padding-bottom:20px;
 	border-radius: 20px;
 	box-shadow:         inset 0 0 10px #000000;
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.0)), color-stop(20%,#a622ad), color-stop(43%,#a622ad), color-stop(48%,#000000), color-stop(54%,#000000), color-stop(61%,#7db9e8), color-stop(80%,#7db9e8), color-stop(100%,rgba(0,0,0,0.0))); 
+	background: #6a1434; /* Old browsers */
+background: -moz-linear-gradient(left,  #6a1434 0%, #841882 32%, #13457b 68%, #144c68 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,#6a1434), color-stop(32%,#841882), color-stop(68%,#13457b), color-stop(100%,#144c68)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  #6a1434 0%,#841882 32%,#13457b 68%,#144c68 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  #6a1434 0%,#841882 32%,#13457b 68%,#144c68 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  #6a1434 0%,#841882 32%,#13457b 68%,#144c68 100%); /* IE10+ */
+background: linear-gradient(to right,  #6a1434 0%,#841882 32%,#13457b 68%,#144c68 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6a1434', endColorstr='#144c68',GradientType=1 ); /* IE6-9 */
+
 }
 .purple {
 	background-color: purple;
 }
 .blue {
-	width: 100%;
-	padding-top: 20px;	
-	margin-top: 60px;
+	padding-top: 18px;	
+	margin-top: -50px;
+	margin-left: 250px;
 }
 .summonersDiv {
-	margin-top: 60px;
+	margin-top: 40px;
 	margin-left: 130px;
 }
 .itemsDiv {
@@ -197,4 +222,16 @@ button {
 	position: absolute;
 	margin-top: -75px;
 	margin-left: 150px;
+}
+button{
+	margin-top: 10px;
+	background-color:#1a1a1a;
+	border-radius: 10px;
+	height:30px;
+	text-align:center;
+	font-family:Verdana;
+	color:white;
+}
+button:hover{
+	box-shadow: inset 0 0 20px #FFD700;
 }
