@@ -29,22 +29,22 @@
 
 				<div class="JunglerTimerToolElement">
 					<p>Baron</p>
-					<canvas width="165" height="135" id="Baron">Your browser does not support the HTML5 canvas tag.</canvas>
+					<canvas width="120" height="150" id="Baron">Your browser does not support the HTML5 canvas tag.</canvas>
 					<button id="btnBaron">Start/Reset</button>
 				</div>
 				<div class="JunglerTimerToolElement">
 					<p>Drake</p>
-					<canvas width="165" height="135" id="Drake">Your browser does not support the HTML5 canvas tag.</canvas>
+					<canvas width="120" height="150" id="Drake">Your browser does not support the HTML5 canvas tag.</canvas>
 					<button id="btnDrake">Start/Reset</button>
 				</div>
 				<div class="JunglerTimerToolElement">
 					<p>Blue Golem</p>
-					<canvas width="165" height="135" id="BlueGolem">Your browser does not support the HTML5 canvas tag.</canvas>
+					<canvas width="120" height="150" id="BlueGolem">Your browser does not support the HTML5 canvas tag.</canvas>
 					<button id="btnBlueGolem">Start/Reset</button>
 				</div>
 				<div class="JunglerTimerToolElement">
 					<p>Red Golem</p>
-					<canvas width="165" height="135" id="RedGolem">Your browser does not support the HTML5 canvas tag.</canvas>
+					<canvas width="120" height="150" id="RedGolem">Your browser does not support the HTML5 canvas tag.</canvas>
 					<button id="btnRedGolem">Start/Reset</button>
 				</div>
 
@@ -148,9 +148,9 @@
 				that.ctx.fillText(time,10,20);
 				that.timeLeft -= 1000;
 				//slider
-				roundRect(that.ctx,0,99,15*that.length/60000,22,5,false,true);
+				roundRect(that.ctx,0,120,15*that.length/60000,22,5,false,true);
 				that.ctx.fillStyle = "blue";
-				roundRect(that.ctx,0,100,(15*that.length/60000)*that.timeLeft/that.length,20,5,true,true);
+				roundRect(that.ctx,0,121,(15*that.length/60000)*that.timeLeft/that.length,20,5,true,true);
 				that.ctx.drawImage(that.img,10,10);
 			}, 1000);
 		};

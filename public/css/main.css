@@ -4,13 +4,6 @@ body{
 p, h1, h2 {
 	color: white;
 }
-button {
-   background: #ededed;
-   border-radius: 5px;
-   color: #1c171c;
-   font-size: 14px;
-   text-decoration: none;
-}
 #container-main {
 	position: absolute;
     width: 600px;
@@ -75,6 +68,17 @@ button {
 }
 #container-friendlist, #container-junglertimertool, #container-matchhistory{
 	display: none;
+}
+.junglertimertoolelement{
+
+}
+div.JunglerTimerToolElement p{
+	position:absolute;
+	margin-left: 140px;
+}
+div.JunglerTimerToolElement button{
+	position:absolute;
+	margin-top:50px;
 }
 #container-addfriend {
 	margin-top: 10px;
@@ -226,7 +230,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6a1434', end
 button{
 	margin-top: 10px;
 	background-color:#1a1a1a;
-	border-radius: 10px;
+	border:1px solid white;
+	border-radius: 8px;
 	height:30px;
 	text-align:center;
 	font-family:Verdana;
